@@ -12,6 +12,7 @@ package convertorbases;
 public class Control {
     
     private String residuo = "";
+    
     /**
      Convertir de letra a numero**/
     public int convertirLetraNumero(char letra){
@@ -331,7 +332,7 @@ public class Control {
         String respuesta ="";
         //System.out.println("Tamaño respuesta:...."+vObjeto.length);
         for(int i=0; i< vObjeto.length; i++){
-            //System.out.println("******+++:...."+vObjeto[i]);
+            System.out.println("******+++:...."+vObjeto[i]);
             int numero = Integer.parseInt(vObjeto[i]);
             if(numero >9){
                 respuesta +=convertirNumeroLetra(numero);
