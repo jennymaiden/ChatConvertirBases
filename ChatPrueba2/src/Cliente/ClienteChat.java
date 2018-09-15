@@ -39,6 +39,7 @@ public class ClienteChat extends JFrame {
         mensajesChat.setWrapStyleWord(true); // Las lineas se parten entre palabras (por los espacios blancos)
         JScrollPane scrollMensajesChat = new JScrollPane(mensajesChat);
         JTextField tfMensaje = new JTextField("");
+        
         JButton btEnviar = new JButton("Enviar");
         
         

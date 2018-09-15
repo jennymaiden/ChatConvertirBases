@@ -13,6 +13,7 @@ public class PruebaBase {
     
     private String [] abecedario = {"0","1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private int tamanioABC = abecedario.length;
+    private String residuo = "";
     
     
     public long [] obtenerArregloNum(String msg){
@@ -50,5 +51,127 @@ public class PruebaBase {
     }
     
     
+    /***
+     contador de las bases*/
+    public long[ ] vectorBase(long[] numeros, long baseOrigen){
+        
+        long [] vectorB = new long[numeros.length];
+        for(int i =0; i < numeros.length; i++){
+            vectorB[i] = (long) Math.pow(baseOrigen, i);
+            //System.out.println("Multiplicacion base::...."+vectorB[i]);
+        }
+        
+        return vectorB;
+    }
+    
+    
+    /**
+     multiplicar los dos bectores retorna en base 10**/
+    public long multiplicarVectores(long [] vNumero, long[] vBase){
+        
+        long [] multiplicacion = new long[vNumero.length];
+        int contador = vNumero.length -1;//3
+        long sumatoria=0;
+        for(int i = 0; i< vNumero.length; i++){
+            
+            multiplicacion[i] = vNumero[i]*vBase[contador];
+                contador --; 
+        }
+        for(int i=0; i < multiplicacion.length; i++){
+            sumatoria = sumatoria+multiplicacion[i];
+        }
+        
+        return sumatoria;
+        
+    }
+    
+    /**
+    Divicion retornar el reciduo y el cociente**/
+    public long[] dividirRC(long dividendo, int divisor){
+       
+        long [] respuesta = new long[2]; //Primera posicion el cociente,- Segunda posicion el residuo
+        respuesta[0] = dividendo/divisor;
+        respuesta[1] =dividendo%divisor;
+        
+        return respuesta;
+    }
+    
+    
+    /**
+     obtener el residuo de las diviciones para convertir a la base final**/
+    public void obtenerBaseFinal(int baseFinal, long base10){
+       //System.out.println("Las bases que llegan son::..."+baseFinal+" - "+base10);
+        long [] arreglo = dividirRC(base10,baseFinal);
+        
+    
+        long cociente = arreglo[0];
+        long residuo = arreglo[1];
+   
+        
+        if(cociente > baseFinal){
+            
+            if(this.getResiduo().equals("")){
+                setResiduo(""+residuo) ;
+            }else{
+                setResiduo(this.getResiduo()+"-"+residuo) ;
+            }
+            
+            
+            obtenerBaseFinal(baseFinal,cociente);
+            //residuo = residuo+"-"+arreglo[1];
+            //System.out.println("El residuo:..."+residuo+" variable:.."+arreglo[1]);
+           
+        }else{
+            //System.out.println("El cociente es menor que base");
+            if(this.getResiduo().equals("")){
+                setResiduo(residuo+"-"+cociente) ;
+            }else{
+                setResiduo(this.getResiduo()+"-"+residuo+"-"+cociente) ;
+            }
+            
+        }
+        
+    }
+    
+    
+    public String getResiduo(){
+        return this.residuo;
+    }
+    
+    public void setResiduo(String residuo){
+        this.residuo= residuo;
+    }
+    
+    /**Metodo para ordenar la base que obtuvimos*/
+    public String[] ordenarBaseFin(String bases){
+        String [] vector = bases.split("-");
+        String [] vRespuesta = new String[vector.length]; 
+        int tamanio= vector.length;
+        int contador = 1;
+       
+        for(int i =0; i<vector.length; i++){
+          
+            vRespuesta[tamanio -contador] = ""+vector[i];
+            contador++;
+            
+        }
+        
+        return vRespuesta;
+    }
+    
+    
+    public String resultadoBases(String[] vObjeto){
+        String respuesta ="";
+        //System.out.println("Tamaño respuesta:...."+vObjeto.length);
+        for(int i=0; i< vObjeto.length; i++){
+            //System.out.println("******+++:...."+vObjeto[i]);
+            //String aux1=vObjeto[i];
+            int numero = Integer.parseInt(vObjeto[i]);
+            respuesta +=abecedario[numero];
+            
+          
+        }
+        return respuesta;
+    }
     
 }

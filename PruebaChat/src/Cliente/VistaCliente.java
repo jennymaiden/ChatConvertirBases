@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 
 /**
@@ -18,16 +19,42 @@ import javax.swing.JTextArea;
  */
 public class VistaCliente extends javax.swing.JFrame {
 
-    private Socket socket;
+    private  Socket socket;
     private int puerto;
     private String host;
     private String usuario;
-    
     /**
      * Creates new form VistaCliente
      */
     public VistaCliente() {
         initComponents();
+        // Ventana de configuracion inicial
+        VentanaConfiguracion vc = new VentanaConfiguracion(this);
+        this.host = vc.getHost();
+        this.puerto = vc.getPuerto();
+        this.usuario = vc.getUsuario();
+        System.out.println("Quieres conectarte a " + host + " en el puerto " + puerto + " con el nombre de ususario: " + usuario + ".");
+        //log.info("Quieres conectarte a " + host + " en el puerto " + puerto + " con el nombre de ususario: " + usuario + ".");
+        
+        // Se crea el socket para conectar con el Sevidor del Chat
+        try {
+            this.socket = new Socket(host, puerto);
+            
+        } catch (UnknownHostException ex) {
+            System.out.println("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
+//log.error("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
+        } catch (IOException ex) {
+            System.out.println("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
+//log.error("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
+        }
+       
+        // Accion para el boton enviar
+        btn_Enviar.addActionListener(new ConexionServidor(socket, txtMensaje, usuario,txtBaseFin,txtDesUsuario ));
+        txtMensaje.setEditable(true);
+        txtBaseFin.setEditable(true);
+        lbl_usuarioConx.setText("Usuario::."+usuario);
+        
+
     }
 
     /**
@@ -39,28 +66,23 @@ public class VistaCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtBaseFin = new javax.swing.JTextField();
         btn_Enviar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtMensaje = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtBaseOrigen = new javax.swing.JTextField();
-        btn_Conectar = new javax.swing.JButton();
         lbl_usuarioConx = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaMensaje = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        txtDesUsuario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel4.setText("Base-x");
 
         jLabel5.setText("Base decodificado:");
 
         txtBaseFin.setEditable(false);
-        txtBaseFin.setText("Base-");
 
         btn_Enviar.setText("Enviar");
         btn_Enviar.setSelected(true);
@@ -81,90 +103,77 @@ public class VistaCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Base codificado:");
-
-        txtBaseOrigen.setEditable(false);
-        txtBaseOrigen.setText("Base-");
-
-        btn_Conectar.setText("Conectarse");
-        btn_Conectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ConectarActionPerformed(evt);
-            }
-        });
-
         lbl_usuarioConx.setText("Favor Conectarse!");
 
+        txtAreaMensaje.setEditable(false);
         txtAreaMensaje.setColumns(20);
         txtAreaMensaje.setRows(5);
-        txtAreaMensaje.setEnabled(false);
-        jScrollPane1.setViewportView(txtAreaMensaje);
+        jScrollPane2.setViewportView(txtAreaMensaje);
+
+        jLabel4.setText("Usuario:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_Conectar))
+                        .addGap(140, 140, 140)
+                        .addComponent(lbl_usuarioConx))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
+                        .addGap(78, 78, 78)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(lbl_usuarioConx))
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(txtMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txtBaseFin, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtBaseOrigen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel4)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                                    .addComponent(txtBaseFin, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDesUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btn_Conectar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_usuarioConx)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtBaseOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtBaseFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtBaseFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDesUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))))
         );
 
         pack();
@@ -172,47 +181,14 @@ public class VistaCliente extends javax.swing.JFrame {
 
     private void btn_EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EnviarActionPerformed
         // TODO add your handling code here:
-        String mensaje = txtMensaje.getText();
-        String baseOrigen = txtBaseOrigen.getText();
-        String baseFin = txtBaseFin.getText();
         
-        System.out.println("EL mensaje que envia es:..."+mensaje+":... la base origen es:..."+baseOrigen+"::..la base fin"+baseFin);
         
-        //******************
-        ConexionServidor obj = new ConexionServidor(socket,txtMensaje,usuario);
-        obj.recibirMensajesServidor(txtAreaMensaje);
     }//GEN-LAST:event_btn_EnviarActionPerformed
 
     private void txtMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_txtMensajeActionPerformed
-
-    private void btn_ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConectarActionPerformed
-        // TODO add your handling code here:
-        VentanaConfiguracion vc = new VentanaConfiguracion(this);
-        host = vc.getHost();
-        puerto = vc.getPuerto();
-        usuario = vc.getUsuario();
-        System.out.println("Quieres conectarte a " + host + " en el puerto " + puerto + " con el nombre de ususario: " + usuario + ".");
-        // Se crea el socket para conectar con el Sevidor del Chat
-        try {
-            socket = new Socket(host, puerto);
-        } catch (UnknownHostException ex) {
-            System.out.println("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
-//log.error("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
-        } catch (IOException ex) {
-            System.out.println("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
-//log.error("No se ha podido conectar con el servidor (" + ex.getMessage() + ").");
-        }
-        System.out.println("Se conecto el usuario:..."+usuario);
-        
-        lbl_usuarioConx.setText("Hola soy: "+usuario);
-        txtMensaje.setEditable(true);
-        txtBaseOrigen.setEditable(true);
-        txtBaseFin.setEditable(true);
-        txtAreaMensaje.setEditable(true);
-    }//GEN-LAST:event_btn_ConectarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,18 +217,17 @@ public class VistaCliente extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VistaCliente().setVisible(true);
-            }
-        });
+        VistaCliente obj = new VistaCliente();
+               obj.setVisible(true);
+                obj.recibirMensajesServidor();
+        
+      
     }
     
     /**
      * Recibe los mensajes del chat reenviados por el servidor
      */
-    public void recibirMensajesServidor(){
+    public   void recibirMensajesServidor(){
         // Obtiene el flujo de entrada del socket
         DataInputStream entradaDatos = null;
         String mensaje;
@@ -271,7 +246,32 @@ public class VistaCliente extends javax.swing.JFrame {
         while (conectado) {
             try {
                 mensaje = entradaDatos.readUTF();
-                txtAreaMensaje.append(mensaje + System.lineSeparator());
+                //validar por usuario
+                String[] aux1 = mensaje.split(":");
+                System.out.println("El usuario envvio mensaje:.."+aux1[0]
+                        +":...Elcliente:.."+usuario+ 
+                        ":..:.eL Usuario destino:"+aux1[2].trim()+":");
+                
+                if(aux1[0].equals(usuario)){
+                    txtAreaMensaje.append(usuario+":"+txtMensaje.getText() + System.lineSeparator());
+                }else{
+                   if(usuario.equals(aux1[2].trim())){
+                       txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
+                   }else if(aux1[2].length()==1){
+                       
+                       txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
+                   }else{
+                       if(aux1[0].equals(usuario)){
+                            txtAreaMensaje.append(usuario+":No se encontro el usuario, Intente de nuevo" + System.lineSeparator());
+                        }
+                   }
+                    
+                }
+                
+                txtMensaje.setText("");
+                txtBaseFin.setText("");
+                txtDesUsuario.setText("");
+                
             } catch (IOException ex) {
                     System.out.println("Error al leer del stream de entrada: " + ex.getMessage());
 //log.error("Error al leer del stream de entrada: " + ex.getMessage());
@@ -285,18 +285,16 @@ public class VistaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Conectar;
     private javax.swing.JButton btn_Enviar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_usuarioConx;
     private javax.swing.JTextArea txtAreaMensaje;
     private javax.swing.JTextField txtBaseFin;
-    private javax.swing.JTextField txtBaseOrigen;
+    private javax.swing.JTextField txtDesUsuario;
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 }

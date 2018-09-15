@@ -11,9 +11,9 @@ package convertorbases;
  */
 public class ConvertorBases {
 
-    public static String mensaje = "TELEGRAFO";
+    public static String mensaje = "CERTIFICACION";
     public static int baseOrigen=30;
-    public static int baseFinal=10;
+    public static int baseFinal=15;
     /**
      * @param args the command line arguments
      */
@@ -49,6 +49,22 @@ public class ConvertorBases {
         
         long base = auxObj.obtenerBaseOrigen(a1);
         System.out.println("La base en la que esta es:::..."+base);
+        System.out.println("*************************");
+        long[] a2 =auxObj.vectorBase(a1, base);
+        for(int i=0; i< a1.length; i++){
+            System.out.println("EL vector base quedo con estas valores::");
+            System.out.println("***..."+a2[i]);
+        }
+        
+        long multi = auxObj.multiplicarVectores(a1, a2);
+        System.out.println("EN base 10:::...."+multi);
+        auxObj.obtenerBaseFinal(baseFinal, multi);
+        System.out.println("Objeto respuesta:....."+auxObj.getResiduo());
+        //System.out.println("---------------");
+        String[] a3 = auxObj.ordenarBaseFin(auxObj.getResiduo());
+        
+        String resAux =auxObj.resultadoBases(a3);
+        System.out.println("El número "+mensaje+" escrito en base "+base+" es igual a "+resAux+" en base "+baseFinal+" .");
     }
     
     //http://cursos-para-educar.me/utilidades/bases

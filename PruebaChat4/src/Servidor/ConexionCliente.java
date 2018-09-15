@@ -46,7 +46,6 @@ public class ConexionCliente extends Thread implements Observer{
             try {
                 // Lee un mensaje enviado por el cliente
                 mensajeRecibido = entradaDatos.readUTF();
-                //System.out.print("EL mensaje enviado por el cliente:..."+mensajeRecibido);
                 // Pone el mensaje recibido en mensajes para que se notifique 
                 // a sus observadores que hay un nuevo mensaje.
                 mensajes.setMensaje(mensajeRecibido);
