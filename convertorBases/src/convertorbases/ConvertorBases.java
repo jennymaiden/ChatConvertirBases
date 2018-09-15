@@ -11,9 +11,9 @@ package convertorbases;
  */
 public class ConvertorBases {
 
-    public static String mensaje = "CERTIFICACION";
+    public static String mensaje = "12345";
     public static int baseOrigen=30;
-    public static int baseFinal=15;
+    public static int baseFinal=10;
     /**
      * @param args the command line arguments
      */
@@ -40,26 +40,35 @@ public class ConvertorBases {
         */
         
         PruebaBase auxObj = new PruebaBase();
-        
+        mensaje= mensaje.toUpperCase();
+        System.out.println("EL mansaje:..."+mensaje);
         long [] a1 =auxObj.obtenerArregloNum(mensaje);
+        System.out.println("EL vector en numeros:...");
         for(int i=0; i< a1.length; i++){
-            System.out.println("EL vector quedo con estas valores::");
-            System.out.println("***..."+a1[i]);
+            
+            System.out.print("["+a1[i]+"]");
         }
-        
+        String [] abcDesorganizado = auxObj.obtenerRandom(a1.length);
+        System.out.println("");
+        System.out.println("El vector desorganizado es");
+        for(int i =0; i<abcDesorganizado.length;i++){
+            System.out.print("["+abcDesorganizado[i]+"]");
+        }
+        System.out.println();
         long base = auxObj.obtenerBaseOrigen(a1);
         System.out.println("La base en la que esta es:::..."+base);
         System.out.println("*************************");
-        long[] a2 =auxObj.vectorBase(a1, base);
+        long[] a2 =auxObj.vectorBase(a1.length, base);
+        System.out.println("EL vector base quedo con estas valores::");
         for(int i=0; i< a1.length; i++){
-            System.out.println("EL vector base quedo con estas valores::");
-            System.out.println("***..."+a2[i]);
+            
+            System.out.print("["+a2[i]+"]");
         }
-        
+        System.out.println();
         long multi = auxObj.multiplicarVectores(a1, a2);
-        System.out.println("EN base 10:::...."+multi);
+        
         auxObj.obtenerBaseFinal(baseFinal, multi);
-        System.out.println("Objeto respuesta:....."+auxObj.getResiduo());
+      
         //System.out.println("---------------");
         String[] a3 = auxObj.ordenarBaseFin(auxObj.getResiduo());
         

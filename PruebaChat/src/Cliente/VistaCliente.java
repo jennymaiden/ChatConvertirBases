@@ -5,6 +5,7 @@
  */
 package Cliente;
 
+import Codificacion.Convertidor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class VistaCliente extends javax.swing.JFrame {
     private int puerto;
     private String host;
     private String usuario;
+    private Convertidor convertir = new Convertidor();
     /**
      * Creates new form VistaCliente
      */
@@ -52,9 +54,9 @@ public class VistaCliente extends javax.swing.JFrame {
         btn_Enviar.addActionListener(new ConexionServidor(socket, txtMensaje, usuario,txtBaseFin,txtDesUsuario ));
         txtMensaje.setEditable(true);
         txtBaseFin.setEditable(true);
-        lbl_usuarioConx.setText("Usuario::."+usuario);
+        lbl_usuarioConx.setText("Bienvenido "+usuario);
         
-
+        this.setTitle("Chat del cliente "+usuario);
     }
 
     /**
@@ -80,10 +82,12 @@ public class VistaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel5.setFont(new java.awt.Font("Comic Sans MS", 1, 15)); // NOI18N
         jLabel5.setText("Base decodificado:");
 
         txtBaseFin.setEditable(false);
 
+        btn_Enviar.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         btn_Enviar.setText("Enviar");
         btn_Enviar.setSelected(true);
         btn_Enviar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,8 +96,11 @@ public class VistaCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 3, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(253, 23, 17));
         jLabel1.setText("Sistema de comunicacion por codificacion");
 
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 15)); // NOI18N
         jLabel2.setText("Mensaje");
 
         txtMensaje.setEditable(false);
@@ -103,6 +110,7 @@ public class VistaCliente extends javax.swing.JFrame {
             }
         });
 
+        lbl_usuarioConx.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         lbl_usuarioConx.setText("Favor Conectarse!");
 
         txtAreaMensaje.setEditable(false);
@@ -110,20 +118,15 @@ public class VistaCliente extends javax.swing.JFrame {
         txtAreaMensaje.setRows(5);
         jScrollPane2.setViewportView(txtAreaMensaje);
 
+        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 1, 15)); // NOI18N
         jLabel4.setText("Usuario:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(lbl_usuarioConx))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -135,15 +138,21 @@ public class VistaCliente extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtBaseFin, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDesUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDesUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                                    .addComponent(txtBaseFin))
+                                .addGap(28, 28, 28)
+                                .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(lbl_usuarioConx)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,29 +160,26 @@ public class VistaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_usuarioConx)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtBaseFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtDesUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))))
+                            .addComponent(txtDesUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -246,27 +252,32 @@ public class VistaCliente extends javax.swing.JFrame {
         while (conectado) {
             try {
                 mensaje = entradaDatos.readUTF();
-                //validar por usuario
+                //El mensaje llega en 3 partes 
+                // [0] =Usuario que envia; [1]= EL mensaje; [2]= Usuario que recive
                 String[] aux1 = mensaje.split(":");
-                System.out.println("El usuario envvio mensaje:.."+aux1[0]
-                        +":...Elcliente:.."+usuario+ 
-                        ":..:.eL Usuario destino:"+aux1[2].trim()+":");
-                
-                if(aux1[0].equals(usuario)){
-                    txtAreaMensaje.append(usuario+":"+txtMensaje.getText() + System.lineSeparator());
+                if(aux1[1].equals("error")){
+                    if(aux1[0].equals(usuario)){
+                        txtAreaMensaje.append(usuario+": No ingreso una base valida para codificar. Intente de nuevo"+ System.lineSeparator());
+                    }
                 }else{
-                   if(usuario.equals(aux1[2].trim())){
-                       txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
-                   }else if(aux1[2].length()==1){
-                       
-                       txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
-                   }else{
-                       if(aux1[0].equals(usuario)){
-                            txtAreaMensaje.append(usuario+":No se encontro el usuario, Intente de nuevo" + System.lineSeparator());
-                        }
-                   }
-                    
+                    //El usuario que envia es el mismo del chat, Muestra el mensaje como lo escribio
+                    if(aux1[0].equals(usuario)){
+                       //Mostrar la base en la que esta escrito el mensaje
+                       long [] a1 =convertir.obtenerArregloNum(txtMensaje.getText().toUpperCase());
+                       long baseInicio = convertir.obtenerBaseOrigen(a1);
+                        txtAreaMensaje.append(usuario+":"+txtMensaje.getText().toUpperCase() +"("+baseInicio+")"+ System.lineSeparator());
+                    }else{
+                        //El usuario de la clase es igual al que lo va enviar
+                       if(usuario.equals(aux1[2].trim())){
+                           txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
+                       }else if(aux1[2].length()==1){
+                           //NO escribio usuario se envia a todos los clientes
+                           txtAreaMensaje.append(aux1[0]+":"+aux1[1] + System.lineSeparator());
+                       }
+
+                    }
                 }
+                
                 
                 txtMensaje.setText("");
                 txtBaseFin.setText("");

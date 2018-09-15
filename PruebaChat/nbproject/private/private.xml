@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/fernando/NetBeansProjects/PruebaChat/src/Cliente/ConexionServidor.java</file>
-            <file>file:/home/fernando/NetBeansProjects/PruebaChat/src/Cliente/VistaCliente.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Servidor/ConexionCliente.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Cliente/ConexionServidor.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Servidor/ServidorChat.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Cliente/VentanaConfiguracion.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Servidor/MensajesChat.java</file>
+            <file>file:/home/fernando/NetBeansProjects/ChatConvertirBases/PruebaChat/src/Cliente/VistaCliente.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,6 +5,7 @@
  */
 package Cliente;
 import Codificacion.Base;
+import Codificacion.Utilidades;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -32,6 +33,7 @@ public class ConexionServidor implements ActionListener  {
     private JTextField baseFin;
     private Base objBase = new Base();
     private JTextField destino;
+    private Utilidades util = new Utilidades();
     
     
     public ConexionServidor(Socket socket, JTextField tfMensaje, String usuario, JTextField base1, JTextField des) {
@@ -59,10 +61,19 @@ public class ConexionServidor implements ActionListener  {
         try {
             //Aqui iria la codificacion
            // System.out.println("El mensaje:..."+tfMensaje.getText()+"::... la base:...."+baseFin.getText());
-            String msg = objBase.obtenerBaseFinal(tfMensaje.getText(), baseFin.getText());
+           String auxMensaje = tfMensaje.getText().toUpperCase ();
+           String msg = "";
+           //Validamos que escriba una base valida entre 2 y 36
+           if(util.validarBase(baseFin.getText())){
+               msg = objBase.obtenerBaseFinal(auxMensaje, baseFin.getText());
+           }else{
+               msg = "error";
+           }
+           
            
             salidaDatos.writeUTF(usuario + ":" + msg +": "+destino.getText());
-            
+            //Inicializar el campo de resivido 
+            objBase.inicializarComponente();
             //tfMensaje.setText("");
         } catch (IOException ex) {
             System.out.println("Error al intentar enviar un mensaje: " + ex.getMessage());

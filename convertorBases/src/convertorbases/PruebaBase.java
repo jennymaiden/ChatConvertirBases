@@ -20,9 +20,10 @@ public class PruebaBase {
         char[ ] caracteres = msg.toCharArray();
         int tamanio = caracteres.length;
         long [] vector = new long[tamanio];
-        
+        System.out.println("El vector que llega es");
         for(int i =0; i<tamanio;i++){
             char aux = caracteres[i];
+            System.out.print("["+aux+"]");
             for(int j=0; j< tamanioABC; j++){
                 String auxABC = abecedario[j];
                 if(String.valueOf(aux).equals(auxABC)){
@@ -30,6 +31,7 @@ public class PruebaBase {
                 }
             }
         }
+        System.out.println("");
         
         return vector;
     }
@@ -44,7 +46,7 @@ public class PruebaBase {
                 numeromayor = vectorAux[i];
             }
         }
-        System.out.println("El long mayor fue:::..."+numeromayor);
+        
         numeromayor = numeromayor+1;
         
         return numeromayor;
@@ -53,10 +55,10 @@ public class PruebaBase {
     
     /***
      contador de las bases*/
-    public long[ ] vectorBase(long[] numeros, long baseOrigen){
+    public long[ ] vectorBase(int auxTam, long baseOrigen){
         
-        long [] vectorB = new long[numeros.length];
-        for(int i =0; i < numeros.length; i++){
+        long [] vectorB = new long[auxTam];
+        for(int i =0; i < auxTam; i++){
             vectorB[i] = (long) Math.pow(baseOrigen, i);
             //System.out.println("Multiplicacion base::...."+vectorB[i]);
         }
@@ -75,7 +77,7 @@ public class PruebaBase {
         for(int i = 0; i< vNumero.length; i++){
             
             multiplicacion[i] = vNumero[i]*vBase[contador];
-                contador --; 
+             contador --; 
         }
         for(int i=0; i < multiplicacion.length; i++){
             sumatoria = sumatoria+multiplicacion[i];
@@ -172,6 +174,21 @@ public class PruebaBase {
           
         }
         return respuesta;
+    }
+    
+    //*************************************
+    
+    public String [] obtenerRandom(int auxTam){
+        
+        
+        String [] vAux = new String [auxTam];
+        for(int i =0; i< auxTam; i++){
+            int numero = (int) (Math.random() * 35)+1;
+            //System.out.println("El numero random fue:..."+numero);
+            vAux[i] = abecedario[numero];
+        }
+        
+        return vAux;
     }
     
 }

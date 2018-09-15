@@ -173,4 +173,22 @@ public class Convertidor {
         }
         return respuesta;
     }
+    
+    /**Metodo que me desorganiza el abecedario
+     @param  int de tamaño del vector origen
+     @return  vector del nuevo orden*/
+    public String [] obtenerRandom(int auxTam){
+        
+        
+        String [] vAux = new String [auxTam];
+        for(int i =0; i< auxTam; i++){
+            int numero = (int) (Math.random() * 35)+1;
+            //System.out.println("El numero random fue:..."+numero);
+            vAux[i] = abecedario[numero];
+        }
+        
+        return vAux;
+    }
+    
+    
 }

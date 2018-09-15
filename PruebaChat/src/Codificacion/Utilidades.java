@@ -21,4 +21,17 @@ public class Utilidades {
             return false;
 	}
     }
+   
+    
+    public boolean validarBase(String base){
+        boolean res = false;
+        if(this.isNumeric(base)){
+            int numero = Integer.parseInt(base);
+            if(numero <=36 && numero >1){
+                res = true;
+            }
+        
+        }
+        return res;
+    }
 }
